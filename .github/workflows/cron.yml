@@ -41,7 +41,7 @@ jobs:
       - name: create .nojekyll
         run: touch result/www/.nojekyll
       - name: create ipfs-add.sh
-        run: cp _ipfs-add.sh result/www/ipfs-add.sh; (cd result/www; find -type f > ../../.github/files-to-cache.lst)
+        run: cp _ipfs-add.sh result/www/ipfs-add.sh; (cd result/www; find 3 -type f > ../../.github/files-to-cache.lst)
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
