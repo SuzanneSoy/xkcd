@@ -41,7 +41,7 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
 
     printf "Pinning %s on the remote service %s...\n" "$h" "$i"
     (
-      if ipfs pin remote add --service=my-remote-pin-"$i" --name="site-bounties-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"; then
+      if ipfs pin remote add --service=my-remote-pin-"$i" --name="xkcd-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"; then
         echo $? > ipfs-pin-remote-add-exitcode
       else
         echo $? > ipfs-pin-remote-add-exitcode

@@ -30,18 +30,45 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: 'recursive'
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: cron.yml
+          workflow_conclusion: success
+          path: old
+      - name: Make output dir
+        run: mkdir -p result/www
+#      - name: extract
+#        run: tar -C result/www -xf ./old/github-pages/artifact.tar; find result
       - name: Go install
         run: go install .
-      - name: Make output dir
-        run: mkdir result/
+      - name: Previously downloaded until
+        run: echo $(cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort | tail -n 1)
+#      - name: Copy old index
+#        run: cp result/www/index.html _old_index.html
       - name: Go run
-        run: go run . result/www -f 1 -t 5
+        run: go run . result/www -f 1 -t 30
+#        run: go run . result/www -f $(( 1 + $( cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort | tail -n 1) )) -t 30
+        # go run . output-dir -f from -t to
+      - name: concat index.html
+        run: ./concat_htmls.sh _old_index.html result/www/index.html > _new_index.html; mv _new_index.html result/www/index.html
+      - name: find
+        run: find result
       - name: create .ipfsignore
         run: touch result/www/.ipfsignore
       - name: create .nojekyll
         run: touch result/www/.nojekyll
       - name: create ipfs-add.sh
         run: cp _ipfs-add.sh result/www/ipfs-add.sh; (cd result/www; find 3 -type f > ../../.github/files-to-cache.lst)
+#      - name: git push
+#        run: |
+#          git config --global user.name 'Suzanne Soy'
+#          git config --global user.email 'suzannesoy@users.noreply.github.com'
+#          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
+#          git add result
+#          git commit -m "Updated comics"
+#          git push
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
