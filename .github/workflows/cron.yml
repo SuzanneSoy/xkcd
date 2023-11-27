@@ -35,17 +35,13 @@ jobs:
       - name: Make output dir
         run: mkdir result/
       - name: Go run
-        run: go run . out -f 1 -t 5
-      - name: Create content
-        run: ls -ld out; ls -lRa out; mkdir -p result; mkdir -p result/www; cp out/{styles.css,favicon.ico} result/www/; cp -r 'out/1/' result/www/1; find result/ -type d -print0 | xargs -0 chmod a+rx; find result/ -type f -print0 | xargs -0 chmod a+r; rm -f result/www/1/*; echo "<html><body><h1>hiaaa $(date)</h1></body></html>" > result/www/index.html
-#        run: ls -ld out; ls -lRa out; mkdir -p result; mkdir -p result/www; cp out/{styles.css,favicon.ico} result/www/; mkdir result/www/1; cp out/1/{index.html,info.json} result/www/1/; cp 'out/1/barrel_cropped_(1).jpg' result/www/1/; echo "<html><body><h1>hiaaa $(date)</h1></body></html>" > result/www/index.html; ls -lRa result
+        run: go run . result/www -f 1 -t 5
       - name: create .ipfsignore
         run: touch result/www/.ipfsignore
       - name: create .nojekyll
         run: touch result/www/.nojekyll
       - name: create ipfs-add.sh
         run: cp _ipfs-add.sh result/www/ipfs-add.sh; (cd result/www; find -type f > ../../.github/files-to-cache.lst)
-
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

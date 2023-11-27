@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	dirPermissions  fs.FileMode = 0744
+	dirPermissions  fs.FileMode = 0755
 	filePermissions fs.FileMode = 0666
 )
 
