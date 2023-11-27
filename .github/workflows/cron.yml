@@ -39,20 +39,22 @@ jobs:
           path: old
       - name: Make output dir
         run: mkdir -p result/www
-      - name: extract
-        run: tar -C result/www -xf ./old/github-pages/artifact.tar; find result
+#      - name: extract
+#        run: tar -C result/www -xf ./old/github-pages/artifact.tar; find result
       - name: Go install
         run: go install .
-      - name: Previously downloaded until
-        run: echo $(cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort | tail -n 1)
-      - name: Copy old index
-        run: cp result/www/index.html _old_index.html
+#      - name: Previously downloaded until
+#        run: echo $(cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort --general-numeric-sort | tail -n 1)
+#      - name: Copy old index
+#        run: cp result/www/index.html _old_index.html
       - name: Go run
-#        run: go run . result/www -f 1 -t 30
-        run: go run . result/www -f $(( 1 + $( cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort | tail -n 1) )) -t 40
+        run: go run . result/www -f 1 -t 30
+#        run: go run . result/www -f $(( 1 + $( cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort --general-numeric-sort | tail -n 1) )) -t 40
         # go run . output-dir -f from -t to
       - name: concat index.html
         run: ./concat_htmls.sh result/www/index.html _old_index.html > _new_index.html; mv _new_index.html result/www/index.html
+      - name: Now downloaded until
+        run: echo $(cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort --general-numeric-sort | tail -n 1)
       - name: find
         run: find result
       - name: create .ipfsignore
