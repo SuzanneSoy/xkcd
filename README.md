@@ -1,6 +1,17 @@
+# IPFS and HTTPs archives of XKCD
+
+* ipns://xkcd.suzanne.soy
+* https://xkcd.suzanne.soy
+
+The latest hash can also be found in the GitHub sidebar.
+
+This archive should be automatically updated daily.
+
 # xkcd-archiver
 
 > A cloner of the [XKCD](https://xkcd.com/) comics for archiving purposes.
+
+Forked from https://github.com/hacdias/xkcd-archiver
 
 ## Install
 
