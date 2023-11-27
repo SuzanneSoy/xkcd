@@ -50,7 +50,7 @@ jobs:
         run: cp result/www/index.html _old_index.html
       - name: Go run
 #        run: go run . result/www -f 1 -t 30
-        run: go run . result/www -f $(( 1 + $( cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort --general-numeric-sort | tail -n 1) )) -t 2000
+        run: go run . result/www -f $(( 1 + $( cd result/www; (echo 1; for i in [0-9]*; do echo $i; done) | sort --general-numeric-sort | tail -n 1) )) -t 2500
         # go run . output-dir -f from -t to
       - name: concat index.html
         run: ./concat_htmls.sh result/www/index.html _old_index.html > _new_index.html; mv _new_index.html result/www/index.html
